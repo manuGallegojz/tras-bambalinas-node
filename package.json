@@ -1,0 +1,20 @@
+{
+  "name": "trasbambalinas",
+  "version": "1.0.0",
+  "description": "tienda online",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-css": "node-sass --include-path scss public/scss/main.scss public/main.css",
+    "watch-css": "nodemon -e scss -x \"npm run build-css\""
+  },
+  "author": "Manuel Gallego",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^5.1.3",
+    "express": "^4.17.3",
+    "jquery": "^3.6.0",
+    "node-sass": "^7.0.1",
+    "nodemon": "^2.0.15"
+  }
+}

@@ -1,0 +1,11 @@
+.color{
+    color: #900c32;
+}
+
+$primary: #900c32;
+$danger: #eac83b;
+$theme-colors: (
+  "primary":    #900c32,
+  "secondary":  #eac83b
+);
+@import "../../node_modules/bootstrap/scss/bootstrap";

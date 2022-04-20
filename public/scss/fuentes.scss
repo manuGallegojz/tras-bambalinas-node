@@ -1,0 +1,49 @@
+//fuentes
+
+@font-face {
+    font-family: mohrb;
+    src: url(./assets/fonts/mohr-bold.ttf);
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: mohrm;
+    src: url(./assets/fonts/mohr-medium.ttf);
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: mohrl;
+    src: url(./assets/fonts/mohr-light.ttf);
+    font-weight: lighter;
+}
+
+@font-face {
+    font-family: sansb;
+    src: url(./assets/fonts/CorporativeSans-Bold.ttf);
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: sansm;
+    src: url(./assets/fonts/CorporativeSans-Medium.ttf);
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: sansl;
+    src: url(./assets/fonts/CorporativeSans-Light.ttf);
+    font-weight: lighter;
+}
+
+.titulos-bold{
+    font-family: mohrb;
+}
+
+.titulos-medium{
+    font-family: mohrm;
+}
+
+.parrafos{
+    font-family: sansm;
+}
