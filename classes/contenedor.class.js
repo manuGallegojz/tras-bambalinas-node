@@ -36,6 +36,4 @@ class Contenedor{
 
 //Creación de la instancia. Fijarse que la ruta hace referencia a la posición en la que se ubican los archivos utilizados.
 
-const nuevoArchivo = new Contenedor("./productos.json");
-
-module.exports = nuevoArchivo;
+module.exports = Contenedor;

@@ -2,7 +2,9 @@ const express = require("express");
 
 //Clase
 
-const nuevoArchivo = require("../classes/contenedor.class");
+const Contenedor = require("../classes/contenedor.class");
+
+const nuevoArchivo = new Contenedor("./productos.json");
 
 //ROUTER
 
