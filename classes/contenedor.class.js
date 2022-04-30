@@ -11,6 +11,7 @@ class Contenedor{
         let productos = JSON.parse(data);
         objeto.id = productos.length+1;
         productos.push(objeto);
+        fs.writeFileSync(this.archivo, JSON.stringify(productos), "utf-8")
         return productos;
         }
 
@@ -32,6 +33,24 @@ class Contenedor{
         return datos
         }
 
+    deleteById(Number) //: void - Elimina del archivo el objeto con el id buscado.
+    {
+        fs.readFile(this.archivo, "utf-8", (err, data)=>{
+            if(err){
+                console.error("Error al leer.")
+            }else
+            {
+                let ListaSinProducto = JSON.parse(data).filter(x => {
+                    return x.id != Number
+                })
+                fs.writeFile(this.archivo, JSON.stringify(ListaSinProducto), "utf-8", (error) =>{
+                    if(error){
+                        console.log("Se produjo un error")
+                        }
+                })
+            }
+        }) 
+        }
     }
 
 //Creación de la instancia. Fijarse que la ruta hace referencia a la posición en la que se ubican los archivos utilizados.

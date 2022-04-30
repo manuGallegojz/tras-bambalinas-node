@@ -1,7 +1,29 @@
 //paquetes externos
 
 const express = require("express")
-const path = require("path");
+const multer = require("multer")
+
+//creación de variable app con express
+
+const app = express()
+
+//Seteo la plantilla
+
+app.set("view engine", "ejs");
+app.set("views", "./views")
+
+//Storage multer
+
+const storage = multer.diskStorage({
+  destination:(req, file, cb)=>{
+    cb(null, "uploads")
+  },
+  filename:(req, file, cb)=>{
+    cb(null, file)
+  }
+})
+
+let upload = multer({storage})
 
 //número de puerto
 
@@ -11,15 +33,12 @@ const PORT = process.env.PORT || 8080
 
 const tiendaRutas = require("./routes/tienda")
 const carritoRutas = require("./routes/carrito")
-const informacionRutas = require("./routes/informacion")
-
-//creación de variable app con express
-
-const app = express()
+const informacionRutas = require("./routes/informacion");
 
 //JSON
 
 app.use(express.json())
+app.use(express.urlencoded({decode:false}))
 
 //ruta estática
 
@@ -42,5 +61,26 @@ try {
 }
 
 app.get("/api/productosinicio", (req, res) => {
-    res.sendFile(path.join(__dirname + "/public/index.html"))
+    res.render("index");
   })
+
+  //tienda
+  const Contenedor = require("./classes/contenedor.class");  
+  const nuevoArchivo = new Contenedor("./productos.json");
+
+  //todos los productos
+
+app.get("/api/productosinicio/getAll", (req, res)=>{
+  res.render("productosPagina", {data: nuevoArchivo.getAll()});
+}) 
+  
+//guardar productos
+
+app.get("/api/productosinicio/formulario", (req, res)=>{
+  res.render("form", {guardado: false, data: nuevoArchivo.getAll(), eliminar: nuevoArchivo.deleteById()})
+})
+
+app.post("/api/productosinicio/formulario", (req, res)=>{
+  nuevoArchivo.save(req.body)
+  res.render("form", {guardado: true, data: nuevoArchivo.getAll(), eliminar: nuevoArchivo.deleteById()})
+})

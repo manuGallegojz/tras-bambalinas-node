@@ -16,26 +16,19 @@ let router = new Router()
 
 //todos los productos
 
-router.get("/productos", (req, res)=>{
+router.get("/products", (req, res)=>{
     res.send(nuevoArchivo.getAll());
 })
 
 //producto según id
 
-router.get("/productos/:id", (req, res)=>{
+router.get("/products/:id", (req, res)=>{
     res.send(nuevoArchivo.getById(req.params.id));
-})
-
-//guradar productos
-
-router.post("/productos", (req, res)=>{
-    let productosNuevo = nuevoArchivo.save(req.body)
-    res.send(productosNuevo)
 })
 
 //actualizar productos
 
-router.put("/productos/:id", (req, res)=>{
+router.put("/products/:id", (req, res)=>{
     res.json({
         resultado: "ok",
         id: req.params.id,
@@ -45,7 +38,7 @@ router.put("/productos/:id", (req, res)=>{
 
 //eliminar productos
 
-router.delete("/productos/:id", (req, res)=>{
+router.delete("/products/:id", (req, res)=>{
     res.json({
         resultado: "ok",
         id: req.params.id
