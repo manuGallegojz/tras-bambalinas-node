@@ -1,0 +1,57 @@
+doctype html
+html
+    include ./partials/head.pug
+    body
+        include ./partials/nav.pug
+        if guardado === true
+            .d-flex.flex-column.align-items-center.mt-4
+                h1.titulos-medium.border.rounded.p-2.pb-3 Objeto Guardado
+        else
+            .d-flex.flex-column.align-items-center.mt-3
+                h1.titulos-medium Agregar Productos
+                form.col-4.border.rounded.p-3.mt-4(role='form' action='/api/productosinicio/formulario' method='POST')
+                    // Titulo del Producto
+                    .form-outline.mb-4
+                        label.form-label(for='title') Titulo
+                        input#title.form-control(type='text' name='title')
+                    // Precio del Producto
+                    .form-outline.mb-4
+                        label.form-label(for='price') Precio
+                        input#price.form-control(type='text' name='price')
+                    // Stock del Producto
+                    .form-outline.mb-4
+                        label.form-label(for='stock') Stock
+                        input#stock.form-control(type='text' name='stock')
+                    // Link de imagen del producto
+                    .form-outline.mb-4
+                        label.form-label(for='image') Imagen
+                        input#image.form-control(type='text' name='image')
+                    // Submit button
+                    button.btn.btn-primary.btn-block(type='submit') Agregar
+        .d-flex.flex-column.align-items-center.mt-5
+            h1.titulos-medium Eliminar Productos
+            small.titulos-medium.text-primary No funciona
+        each e in data
+            .container.pt-4
+                .card.shadow-0.border.rounded-3.my-2
+                  .card-body
+                    .row
+                      .col-md-12.col-lg-3.col-xl-3.mb-4.mb-lg-0
+                        .bg-image.hover-zoom.ripple.rounded.ripple-surface.d-flex.justify-content-center
+                          img.col-6(src=e.image alt='Producto')
+                      // Información
+                      .col-md-6.col-lg-6.col-xl-6
+                        // Título
+                        h5=e.title
+                        // Descripción
+                        p.text-truncate.mb-4.mb-md-0=e.description
+                      .col-md-6.col-lg-3.col-xl-3.border-sm-start-none.border-start
+                        // Precio
+                        .d-flex.flex-row.align-items-center.mb-1
+                          h4.mb-1.me-1="$" + e.price
+                        h6.text-success Con costos de env&iacute;o
+                        .d-flex.flex-column.mt-4
+                          button.btn.btn-primary.btn-sm(type='button') Detalles
+                          button.btn.btn-outline-primary.btn-sm.mt-2(type='button')
+                              Agregar al carrito
+        include ./partials/footer.pug

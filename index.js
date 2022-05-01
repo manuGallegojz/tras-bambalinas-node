@@ -9,19 +9,8 @@ const app = express()
 
 //Seteo la plantilla
 
-const handlebars = require("express-handlebars");
-
-app.engine(
-  "hbs",
-  handlebars.engine({
-    extname: "hbs",
-    layoutsDir: __dirname + "/views/layouts",
-    defaultLayout: "index",
-    partialsDir: __dirname + "/views/partials",
-  })
-)
-app.set('views', './views');
-app.set('view engine', 'hbs');
+app.set('views', './view');
+app.set('view engine', 'pug');
 
 //Storage multer
 
@@ -71,27 +60,29 @@ try {
   console.log("Se produjo el error:" + error);
 }
 
+
 app.get("/api/productosinicio", (req, res) => {
-    res.render("inicio");
+    res.render("index");
   })
 
-  //tienda
-  const Contenedor = require("./classes/contenedor.class");  
-  const nuevoArchivo = new Contenedor("./productos.json");
 
-  //todos los productos
+//tienda
+const Contenedor = require("./classes/contenedor.class");  
+const nuevoArchivo = new Contenedor("./productos.json");
+
+//todos los productos
 
 app.get("/api/productosinicio/getAll", (req, res)=>{
-  res.render("paginaProductos", {data: nuevoArchivo.getAll()});
+  res.render("productsPage", {data: nuevoArchivo.getAll()});
 }) 
   
 //guardar productos
 
 app.get("/api/productosinicio/formulario", (req, res)=>{
-  res.render("form", {guardado: false, data: nuevoArchivo.getAll(), eliminar: nuevoArchivo.deleteById()})
+  res.render("formPage", {guardado: false, data: nuevoArchivo.getAll(), eliminar: nuevoArchivo.deleteById()})
 })
 
 app.post("/api/productosinicio/formulario", (req, res)=>{
   nuevoArchivo.save(req.body)
-  res.render("form", {guardado: true, data: nuevoArchivo.getAll(), eliminar: nuevoArchivo.deleteById()})
+  res.render("formPage", {guardado: true, data: nuevoArchivo.getAll(), eliminar: nuevoArchivo.deleteById()})
 })

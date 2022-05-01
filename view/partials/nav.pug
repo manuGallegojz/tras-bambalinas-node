@@ -1,0 +1,27 @@
+doctype html
+html
+    body
+        header
+            nav.navbar.navbar-expand-lg.navbar-light.py-3.border-bottom
+                // izquierda
+                span.col-1
+                #navbarText.d-flex.col-lg-4.d-flex.justify-content-evenly
+                    a.nav-link(href='./formulario')
+                        h5.mb-0.titulos-medium Edici&oacute;n de Productos
+                    a.nav-link(href='./getAll')
+                        h5.mb-0.titulos-medium Ver Productos
+                // <a class="nav-link" href="#"><h5 class="mb-0 titulos-medium">Temporadas</h5></a>
+                // centro
+                .col-lg-2.d-flex.justify-content-center
+                    a.navbar-brand(href='/api/productosinicio')
+                        img(src='./assets/img/logos/logo.svg' alt='Logotipo' width='200px')
+                // derecha
+                #navbarText.d-flex.col-lg-4.d-flex.justify-content-evenly
+                    a.nav-link(href='#')
+                        h5.mb-0.titulos-medium Servicios
+                    a.nav-link(href='#')
+                        h5.mb-0.titulos-medium Contacto
+                    span.fa-layers.fa-fw.d-flex.justify-content-center.align-items-center
+                        i.fas.fa-shopping-cart.blanco.headerIcono
+                        span.fa-layers-counter 0
+                span.col-1
