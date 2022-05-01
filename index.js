@@ -82,16 +82,16 @@ app.get("/api/productosinicio", (req, res) => {
   //todos los productos
 
 app.get("/api/productosinicio/getAll", (req, res)=>{
-  res.render("paginaProductos", {data: nuevoArchivo.getAll()});
+  res.render("paginaProductos", {data: nuevoArchivo.getAll(), eliminar: null});
 }) 
   
 //guardar productos
 
 app.get("/api/productosinicio/formulario", (req, res)=>{
-  res.render("form", {guardado: false, data: nuevoArchivo.getAll(), eliminar: nuevoArchivo.deleteById()})
+  res.render("form", {guardado: false, data: nuevoArchivo.getAll(), eliminar: true})
 })
 
 app.post("/api/productosinicio/formulario", (req, res)=>{
   nuevoArchivo.save(req.body)
-  res.render("form", {guardado: true, data: nuevoArchivo.getAll(), eliminar: nuevoArchivo.deleteById()})
+  res.render("form", {guardado: true, data: nuevoArchivo.getAll(), eliminar: true})
 })

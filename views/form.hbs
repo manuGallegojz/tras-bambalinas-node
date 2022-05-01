@@ -50,6 +50,20 @@
     <h1 class="titulos-medium">Eliminar Productos</h1>
     <small class="titulos-medium text-primary">No funciona</small>
 
-    {{>productos}}
+    {{#> productos }}
+        {{log eliminar}}  
+        {{#if eliminar}}
+        <button class="btn btn-outline-primary btn-sm mt-2" type="button">
+        Eliminar
+        </button>
+
+        {{else}}
+
+        <button class="btn btn-outline-primary btn-sm mt-2" type="button">
+        Agregar al carrito
+        </button>
+
+        {{/if}}
+    {{/ productos}}
 
     </div>

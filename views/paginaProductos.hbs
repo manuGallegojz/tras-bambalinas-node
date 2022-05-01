@@ -1,1 +1,14 @@
-{{>productos}}
+{{#> productos}}
+    {{#if eliminar}}
+    <button class="btn btn-outline-primary btn-sm mt-2" type="button">
+    Eliminar
+    </button>
+
+    {{else}}
+
+    <button class="btn btn-outline-primary btn-sm mt-2" type="button">
+    Agregar al carrito
+    </button>
+
+    {{/if}}
+{{/ productos}}
