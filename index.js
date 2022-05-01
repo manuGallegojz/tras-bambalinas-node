@@ -9,8 +9,19 @@ const app = express()
 
 //Seteo la plantilla
 
-app.set("view engine", "ejs");
-app.set("views", "./views")
+const handlebars = require("express-handlebars");
+
+app.engine(
+  "hbs",
+  handlebars.engine({
+    extname: "hbs",
+    layoutsDir: __dirname + "/views/layouts",
+    defaultLayout: "index",
+    partialsDir: __dirname + "/views/partials",
+  })
+)
+app.set('views', './views');
+app.set('view engine', 'hbs');
 
 //Storage multer
 
@@ -61,7 +72,7 @@ try {
 }
 
 app.get("/api/productosinicio", (req, res) => {
-    res.render("index");
+    res.render("inicio");
   })
 
   //tienda
@@ -71,7 +82,7 @@ app.get("/api/productosinicio", (req, res) => {
   //todos los productos
 
 app.get("/api/productosinicio/getAll", (req, res)=>{
-  res.render("productosPagina", {data: nuevoArchivo.getAll()});
+  res.render("paginaProductos", {data: nuevoArchivo.getAll()});
 }) 
   
 //guardar productos

@@ -1,12 +1,11 @@
-<% data.forEach((e)=>{   %>
-
-    <div class="container">
+{{#each data}}
+<div class="container pt-4">
             <div class="card shadow-0 border rounded-3 my-2">
                 <div class="card-body">
                 <div class="row">
                     <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
                     <div class="bg-image hover-zoom ripple rounded ripple-surface d-flex justify-content-center">
-                        <img src="<%=  e.image   %>" alt="Producto" class="col-6" />
+                        <img src="{{this.image}}" alt="Producto" class="col-6" />
                     </div>
                     </div>
 
@@ -16,12 +15,12 @@
 
                         <!-- Título -->
 
-                        <h5><%=  e.title   %></h5>
+                        <h5>{{this.title}}</h5>
 
                         <!-- Descripción -->
                     
                     <p class="text-truncate mb-4 mb-md-0">
-                        <%=  e.description   %>
+                        {{this.description}}
                     </p>
 
                     </div>
@@ -31,22 +30,16 @@
                         <!-- Precio -->
                         
                         <div class="d-flex flex-row align-items-center mb-1">
-                            <h4 class="mb-1 me-1">$<%=  e.price   %></h4>
+                            <h4 class="mb-1 me-1">${{this.price}}</h4>
                         </div>
 
                     <h6 class="text-success">Con costos de envío</h6>
                     <div class="d-flex flex-column mt-4">
                         <button class="btn btn-primary btn-sm" type="button">Detalles</button>
-                        <%  if(!eliminar){      %>
                         <button class="btn btn-outline-primary btn-sm mt-2" type="button">
                         Agregar al carrito
                         </button>
-                        <%  }else{      %>
-                        <button class="btn btn-outline-primary btn-sm mt-2" type="button">
-                            Eliminar Producto
-                        </button>
-
-                        <%  }      %>
+                        
                     </div>
                     </div>
                 </div>
@@ -54,5 +47,4 @@
         </div>
 
     </div>
-
-    <%  })   %>
+{{/each}}

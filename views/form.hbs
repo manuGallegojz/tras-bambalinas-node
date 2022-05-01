@@ -1,11 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-    <%- include('templates/head')      %>
-<body>
+    {{#if guardado}}
 
-    <%- include('templates/nav')      %>
+    <div class="d-flex flex-column align-items-center mt-4">
 
-    <% if(!guardado){      %>
+        <h1 class="titulos-medium border rounded p-2 pb-3">Objeto Guardado</h1>
+
+    </div>
+
+    {{else}}
 
     <div class="d-flex flex-column align-items-center mt-3">
 
@@ -42,26 +43,13 @@
 
     </div>
 
-    <% }else{      %>
-
-    <div class="d-flex flex-column align-items-center mt-4">
-
-        <h1 class="titulos-medium border rounded p-2 pb-3">Objeto Guardado</h1>
-
-    </div>
-
-    <% }      %>
+    {{/if}}
 
     <div class="d-flex flex-column align-items-center mt-5">
 
     <h1 class="titulos-medium">Eliminar Productos</h1>
     <small class="titulos-medium text-primary">No funciona</small>
 
-    <%- include('templates/productos', {data: data, eliminar:eliminar})      %>
+    {{>productos}}
 
     </div>
-
-    <%- include('templates/footer')      %>
-
-</body>
-</html>
