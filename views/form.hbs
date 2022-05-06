@@ -1,0 +1,77 @@
+    <div class="d-flex flex-column align-items-center mt-3">
+
+    <h1 class="titulos-medium">Agregar Productos</h1>
+
+    <form action="/api/inicio/formulario" method="post" class="col-4 border rounded p-3 mt-4">
+        <!-- Titulo del Producto -->
+        <div class="form-outline mb-4">
+            <label class="form-label" for="title">Titulo</label>
+            <input type="text" id="title" class="form-control" name="title"/>
+        </div>
+
+        <!-- Precio del Producto -->
+        <div class="form-outline mb-4">
+            <label class="form-label" for="price">Precio</label>
+            <input type="text" id="price" class="form-control" name="price"/>
+        </div>
+
+        <!-- Stock del Producto -->
+        <div class="form-outline mb-4">
+            <label class="form-label" for="stock">Stock</label>
+            <input type="text" id="stock" class="form-control" name="stock"/>
+        </div>
+
+        <!-- Link de imagen del producto -->
+        <div class="form-outline mb-4">
+            <label class="form-label" for="image">Imagen</label>
+            <input type="text" id="image" class="form-control" name="image"/>
+        </div>
+
+        <!-- Submit button -->
+        <button type="submit" class="btn btn-primary btn-block">Agregar</button>
+    </form>
+
+    </div>
+
+    <div class="d-flex flex-column align-items-center mt-5">
+
+    <h1 class="titulos-medium">Eliminar Productos</h1>
+    <small class="titulos-medium text-primary">No funciona</small>
+
+        {{>productos }}
+
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+    const socket = io();
+
+    socket.on("message_backend", (data)=>{
+        document.querySelector("#producto").innerHTML = "";
+        render(data)
+        socket.emit("message_cliente", "Buenas, Yo soy Robby!")
+    })
+
+    const render = (data)=>{
+        data.map((e)=>{
+            let producto = `
+            <div class="border border-info">
+                <div class="card-body p-3">
+                    <img class="w-100 mb-4" src="${e.image}" alt="Producto"></img>
+                    <h6 class="card-title">${e.title}</h6>
+                    <h5 class="card-text">$ ${e.price}</h5>
+                    <small>Stock: ${e.stock}</small>
+                        <div class="border rounded d-flex col-5 justify-content-between my-2 p-0">
+                            <button class="btn btn-primary botonStock p-0 m-0 rounded text-secondary">-</button>
+                        <div>
+                            <small>1</small>
+                    </div>
+                        <button class="btn btn-primary botonStock p-0 rounded text-secondary">+</button>
+                    </div>
+                    <a href="#" class="btn btn-primary">Añadir al carrito</a>
+                </div>
+            </div>   
+            `
+            document.querySelector("#producto").innerHTML += producto;
+        })
+    }
+    </script>
