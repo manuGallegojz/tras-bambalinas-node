@@ -1,15 +1,58 @@
 //paquetes externos
 
-const express = require("express")
-const multer = require("multer")
-
-//creación de variable app con express
-
-const app = express()
-
-//Seteo la plantilla
-
+const multer = require("multer");
 const handlebars = require("express-handlebars");
+const express = require("express");
+const app = express();
+
+//server
+
+const http = require("http");
+const server = http.createServer(app);
+
+//socket
+
+const {Server} = require("socket.io");
+const io = new Server(server);
+
+//Storage multer
+
+const storage = multer.diskStorage({
+  destination:(req, file, cb)=>{
+    cb(null, "uploads")
+  },
+  filename:(req, file, cb)=>{
+    cb(null, file)
+  }
+})
+
+let upload = multer({storage});
+
+//número de puerto
+
+const PORT = process.env.PORT || 8080;
+
+//rutas
+
+const tiendaRutas = require("./routes/tienda")
+const carritoRutas = require("./routes/carrito")
+const informacionRutas = require("./routes/informacion");
+
+//tienda
+const Contenedor = require("./classes/contenedor.class");  
+const nuevoArchivo = new Contenedor("./productos.json");
+
+//conexion
+
+io.on("connection", (socket)=>{
+  socket.emit("message_backend", nuevoArchivo.getAll())
+
+  socket.on("message_cliente", (data)=>{
+    console.log(data)
+  })
+})
+
+//seteo la plantilla
 
 app.engine(
   "hbs",
@@ -23,29 +66,6 @@ app.engine(
 app.set('views', './views');
 app.set('view engine', 'hbs');
 
-//Storage multer
-
-const storage = multer.diskStorage({
-  destination:(req, file, cb)=>{
-    cb(null, "uploads")
-  },
-  filename:(req, file, cb)=>{
-    cb(null, file)
-  }
-})
-
-let upload = multer({storage})
-
-//número de puerto
-
-const PORT = process.env.PORT || 8080
-
-//rutas
-
-const tiendaRutas = require("./routes/tienda")
-const carritoRutas = require("./routes/carrito")
-const informacionRutas = require("./routes/informacion");
-
 //JSON
 
 app.use(express.json())
@@ -53,45 +73,24 @@ app.use(express.urlencoded({decode:false}))
 
 //ruta estática
 
-app.use("/api/productosinicio", express.static("public")) 
+app.use("/api/inicio", express.static("public")) 
 
 //declarando las rutas correspondientes
 
-app.use("/api", tiendaRutas);
-app.use("/api", carritoRutas);
-app.use("/api", informacionRutas);
+app.use("/api/inicio", tiendaRutas);
+app.use("/api/inicio", carritoRutas);
+app.use("/api/inicio", informacionRutas);
 
 //rutas principales
 
 try {
-  app.listen(PORT, ()=>{
+  server.listen(PORT, ()=>{
     console.log("en funcionamiento.")
   })
 } catch (error) {
   console.log("Se produjo el error:" + error);
 }
 
-app.get("/api/productosinicio", (req, res) => {
+app.get("/api/inicio", (req, res) => {
     res.render("inicio");
   })
-
-  //tienda
-  const Contenedor = require("./classes/contenedor.class");  
-  const nuevoArchivo = new Contenedor("./productos.json");
-
-  //todos los productos
-
-app.get("/api/productosinicio/getAll", (req, res)=>{
-  res.render("paginaProductos", {data: nuevoArchivo.getAll(), eliminar: null});
-}) 
-  
-//guardar productos
-
-app.get("/api/productosinicio/formulario", (req, res)=>{
-  res.render("form", {guardado: false, data: nuevoArchivo.getAll(), eliminar: true})
-})
-
-app.post("/api/productosinicio/formulario", (req, res)=>{
-  nuevoArchivo.save(req.body)
-  res.render("form", {guardado: true, data: nuevoArchivo.getAll(), eliminar: true})
-})

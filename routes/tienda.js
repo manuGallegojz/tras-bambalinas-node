@@ -1,4 +1,20 @@
 const express = require("express");
+const handlebars = require("express-handlebars");
+const app = express()
+
+//Seteo la plantilla
+
+app.engine(
+    "hbs",
+    handlebars.engine({
+        extname: "hbs",
+        layoutsDir: __dirname + "../views/layouts",
+        defaultLayout: "index",
+        partialsDir: __dirname + "../views/partials",
+    })
+)
+app.set('views', './views');
+app.set('view engine', 'hbs');
 
 //Clase
 
@@ -14,10 +30,21 @@ let router = new Router()
 
 // RUTAS
 
-//todos los productos
+  //todos los productos
 
-router.get("/products", (req, res)=>{
-    res.send(nuevoArchivo.getAll());
+router.get("/getAll", (req, res)=>{
+    res.render("paginaProductos", {data: nuevoArchivo.getAll(), eliminar: null});
+}) 
+
+  //guardar productos
+
+router.get("/formulario", (req, res)=>{
+    res.render("form", {guardado: false, data: nuevoArchivo.getAll(), eliminar: true})
+})
+
+router.post("/formulario", (req, res)=>{
+    nuevoArchivo.save(req.body)
+    res.render("form", {eliminar: true})
 })
 
 //producto según id

@@ -1,5 +1,17 @@
 <header>
-    <nav class="navbar navbar-expand-lg navbar-light py-3 border-bottom">
+    <nav class="navbar navbar-expand-lg navbar-light d-flex flex-column">
+
+        <div class="border-bottom col-12">
+            <div class="container">
+                <ul class="d-flex list-unstyled justify-content-end mb-2">
+                    <li class="me-3 text-primary"><a class="text-decoration-none" href="./formulario"><small>Editar Productos</small></a></li>
+                    <li class="me-3"><a class="text-decoration-none text-reset" href=""><small>Mis compras</small></a></li>
+                    <li class="me-3"><a class="text-decoration-none text-reset" href=""><small>Cuenta</small></a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="d-flex align-items-center border-bottom py-3 col-12">
 
         <!-- izquierda -->
 
@@ -7,9 +19,9 @@
 
             <div class="d-flex col-lg-4 d-flex justify-content-evenly" id="navbarText">
                 
-                        <a class="nav-link" href="./formulario"><h5 class="mb-0 titulos-medium">Edición de Productos</h5></a>
+                        <a class="nav-link" href="./getAll"><h5 class="mb-0 titulos-medium">Respostería</h5></a>
 
-                        <a class="nav-link" href="./getAll"><h5 class="mb-0 titulos-medium">Ver Productos</h5></a>
+                        <a class="nav-link" href="./getAll"><h5 class="mb-0 titulos-medium">Tienda</h5></a>
 
                         <!-- <a class="nav-link" href="#"><h5 class="mb-0 titulos-medium">Temporadas</h5></a> -->
 
@@ -18,7 +30,7 @@
         <!-- centro -->
 
             <div class="col-lg-2 d-flex justify-content-center">
-                <a class="navbar-brand" href="/api/productosinicio">
+                <a class="navbar-brand" href="/api/inicio">
                     <img src="./assets/img/logos/logo.svg" alt="Logotipo" width="200px">
                 </a>
             </div>
@@ -27,18 +39,22 @@
 
             <div class="d-flex col-lg-4 d-flex justify-content-evenly" id="navbarText">
                     
-                <a class="nav-link" href="#"><h5 class="mb-0 titulos-medium">Servicios</h5></a>
+                <a class="nav-link" href="./servicios"><h5 class="mb-0 titulos-medium">Servicios</h5></a>
             
-                <a class="nav-link" href="#"><h5 class="mb-0 titulos-medium">Contacto</h5></a>
+                <a class="nav-link" href="./contacto"><h5 class="mb-0 titulos-medium">Contacto</h5></a>
 
-                <span class="fa-layers fa-fw d-flex justify-content-center align-items-center">
+                <a class="nav-link text-reset" href="./carrito">
+                    <span class="fa-layers fa-fw d-flex justify-content-center align-items-center">
                     <i class="fas fa-shopping-cart blanco headerIcono"></i>
                     <span class="fa-layers-counter">0</span>
-                </span> 
+                    </span> 
+                </a>
 
             </div>
 
             <span class="col-1"></span>
+
+        </div>
 
     </nav>
 </header>
