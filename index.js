@@ -1,16 +1,70 @@
 //paquetes externos
 
-const express = require("express")
-const multer = require("multer")
+const multer = require("multer");
+const handlebars = require("express-handlebars");
+const express = require("express");
+const app = express();
 
-//creación de variable app con express
+//server
 
-const app = express()
+const http = require("http");
+const server = http.createServer(app);
 
-//Seteo la plantilla
+//socket
 
-app.set('views', './view');
-app.set('view engine', 'pug');
+const {Server} = require("socket.io");
+const io = new Server(server);
+
+//Storage multer
+
+const storage = multer.diskStorage({
+  destination:(req, file, cb)=>{
+    cb(null, "uploads")
+  },
+  filename:(req, file, cb)=>{
+    cb(null, file)
+  }
+})
+
+let upload = multer({storage});
+
+//número de puerto
+
+const PORT = process.env.PORT || 8080;
+
+//rutas
+
+const tiendaRutas = require("./routes/tienda")
+const carritoRutas = require("./routes/carrito")
+const informacionRutas = require("./routes/informacion");
+
+//tienda
+const Contenedor = require("./classes/contenedor.class");  
+const nuevoArchivo = new Contenedor("./productos.json");
+
+//conexion
+
+io.on("connection", (socket)=>{
+  socket.emit("message_backend", nuevoArchivo.getAll())
+
+  socket.on("message_cliente", (data)=>{
+    console.log(data)
+  })
+})
+
+//seteo la plantilla
+
+app.engine(
+  "hbs",
+  handlebars.engine({
+    extname: "hbs",
+    layoutsDir: __dirname + "/views/layouts",
+    defaultLayout: "index",
+    partialsDir: __dirname + "/views/partials",
+  })
+)
+app.set('views', './views');
+app.set('view engine', 'hbs');
 
 //JSON
 
@@ -37,29 +91,6 @@ try {
   console.log("Se produjo el error:" + error);
 }
 
-
-app.get("/api/productosinicio", (req, res) => {
-    res.render("index");
+app.get("/api/inicio", (req, res) => {
+    res.render("inicio");
   })
-
-
-//tienda
-const Contenedor = require("./classes/contenedor.class");  
-const nuevoArchivo = new Contenedor("./productos.json");
-
-//todos los productos
-
-app.get("/api/productosinicio/getAll", (req, res)=>{
-  res.render("productsPage", {data: nuevoArchivo.getAll()});
-}) 
-  
-//guardar productos
-
-app.get("/api/productosinicio/formulario", (req, res)=>{
-  res.render("formPage", {guardado: false, data: nuevoArchivo.getAll(), eliminar: nuevoArchivo.deleteById()})
-})
-
-app.post("/api/productosinicio/formulario", (req, res)=>{
-  nuevoArchivo.save(req.body)
-  res.render("formPage", {guardado: true, data: nuevoArchivo.getAll(), eliminar: nuevoArchivo.deleteById()})
-})
